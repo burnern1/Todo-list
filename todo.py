@@ -57,7 +57,7 @@ def main():
                 task_number = int(input("삭제를 원하는 작업의 번호를 입력하세요"))
                 delete_task(task_number)
             except:
-                
+                pass
         elif choice == 5:
             print("종료")
             break
