@@ -19,7 +19,7 @@ def load_task():
 
 def save_task(tasks): # add task를 통해 전달받은 해야할 일을 파일에 저장하는 기능
     with open(TASK_FILE, 'w', encoding = "UTF-8") as file: # file => open(TASK_FILE, 'w', encoding = "UTF-8")
-        json.dump(tasks, file, indent = 4, ensure_ascii = False) # 
+        json.dump(tasks, file, indent = 4, ensure_ascii = False) 
 
 def add_task(task_name): # 할 일 추가 함수
     tasks = load_task() # 파일이 존재 할 경우 가져오기
@@ -39,7 +39,13 @@ def view_tasks(): #할 일 목록보기, merge 진행
             print(f"{i}, {task['name']} - {status}") # -> 1. 파이썬 공부하기 - false
 
 def complete_task(task_number):
-    pass
+    tasks = load_task() # tasks = [{"name" : "파이썬 공부하기"}, "completed" : false}, ]
+    if 1 <= task_number <= len(tasks):
+        tasks[task_number - 1]["completed"] = True # tasks[0]["completed"] => {"name" : "파이썬 공부하기", "completed" : false} -> false
+        save_task(tasks)
+        print(f"'할 일 : {tasks[task_number - 1]['name']}'이(가) 완료 처리되었습니다." )
+    else:
+        print("유효하지 않은 번호입니다. 다시 확인 후 입력해주세요")
 
 def delete_task(task_number):
     pass
