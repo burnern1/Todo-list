@@ -3,6 +3,14 @@ import os
 
 TASK_FILE = 'tasks.json'
 
+def show_menu(): # 메뉴를 보여주는 함수
+    print("작업 관리 애플리케이션")
+    print("1. 할 일 추가")
+    print("2. 할 일 목록보기")
+    print("3. 할 일 완료")
+    print("4. 할 일 삭제")
+    print("5. 종료")
+
 def load_task():
     if os.path.exists(TASK_FILE):
         with open(TASK_FILE, 'r', encoding = "UTF-8") as file: # file => open(TASK_FILE, 'r', encoding = "UTF-8")
@@ -13,27 +21,26 @@ def save_task(tasks): # add task를 통해 전달받은 해야할 일을 파일�
     with open(TASK_FILE, 'w', encoding = "UTF-8") as file: # file => open(TASK_FILE, 'w', encoding = "UTF-8")
         json.dump(tasks, file, indent = 4, ensure_ascii = False) # 
 
-
-
-def show_menu(): # 메뉴를 보여주는 함수
-    print("작업 관리 애플리케이션")
-    print("1. 할 일 추가")
-    print("2. 할 일 목록보기")
-    print("3. 할 일 완료")
-    print("4. 할 일 삭제")
-    print("5. 종료")
-
 def add_task(task_name): # 할 일 추가 함수
     tasks = load_task() # 파일이 존재 할 경우 가져오기
     task = {'name' : task_name, "completed" : False} # 입력값에 대한 데이터 타입
     tasks.append(task)
     save_task(tasks)
 
-def view_tasks():
-    pass
+def view_tasks(): #할 일 목록보기
+    tasks = load_task() # 파일이 있는 경우 안에 내용물리 tasks에 들어가고 없으면 빈 리스트가 들어감
+    if not tasks:
+        print("현재 등록된 작업이 없습니다.")
+    else:
+        print("작업 목록: ") 
+        for i, task in enumerate(tasks, start=1): #enumerate
+        #enumerate() -> i = 1, task = {"name" : "파이썬 공부하기", "completed" : false. }
+            status = "완료" if task['copleted'] else "미완료" # 키값을 넣으면 자동적으로 반환(출력 또는 돌려주기)
+            print(f"{i}, {task['name']} - {status}") # -> 1. 파이썬 공부하기 - false
 
 def complete_task(task_number):
     pass
+
 def delete_task(task_number):
     pass
 
@@ -57,7 +64,7 @@ def main():
                 task_number = int(input("삭제를 원하는 작업의 번호를 입력하세요"))
                 delete_task(task_number)
             except:
-                
+                pass
         elif choice == 5:
             print("종료")
             break
